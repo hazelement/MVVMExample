@@ -1,3 +1,11 @@
+/**
+ * An android project to demo the use of architecture components
+ *
+ * The app allow user to input city name and get weather from yahoo
+ * When app hide in background should demonstrate viewmodel live through activity life cycle
+ * WHen app is closed/reopened, Room should be used to demo persistent storage/caching
+ */
+
 package com.example.harry.mvvmexample;
 
 import android.support.v7.app.AppCompatActivity;
