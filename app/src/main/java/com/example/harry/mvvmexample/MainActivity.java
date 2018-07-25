@@ -4,6 +4,8 @@
  * The app allow user to input city name and get weather from yahoo
  * When app hide in background should demonstrate viewmodel live through activity life cycle
  * WHen app is closed/reopened, Room should be used to demo persistent storage/caching
+ * TODO setup DAO
+ * TODO setup data binding
  */
 
 package com.example.harry.mvvmexample;
