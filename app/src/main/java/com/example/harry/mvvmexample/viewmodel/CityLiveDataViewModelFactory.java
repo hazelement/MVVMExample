@@ -18,7 +18,7 @@ public class CityLiveDataViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass.isAssignableFrom(CityLiveDataViewModel.class)){
-            return (T) new CityLiveDataViewModel(city);
+//            return (T) new CityLiveDataViewModel(city);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class");

@@ -1,57 +1,55 @@
 package com.example.harry.mvvmexample.viewmodel;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
-import com.example.harry.mvvmexample.api.FakeWeather;
 import com.example.harry.mvvmexample.model.City;
+import com.example.harry.mvvmexample.repo.CityRepository;
 
-public class CityLiveDataViewModel extends ViewModel {
+public class CityLiveDataViewModel extends AndroidViewModel {
+
+    private CityRepository cityRepository;
 
     private static String LOG_TAG = ViewModel.class.getSimpleName();
 
-    private City city;
+    private LiveData<City> city;
 
-    private MutableLiveData<String> name = new MutableLiveData<>();
-    private MutableLiveData<Double> temperature = new MutableLiveData<Double>();
+    public CityLiveDataViewModel(Application application) {
 
-    public CityLiveDataViewModel(City city) {
-        this.city = city;
-        updateData();
+        super(application);
+        cityRepository = new CityRepository(application);
+        city = cityRepository.getCurrentCity();
+
+        Log.d(LOG_TAG, "ViewModel created.");
     }
 
-    public void updateData(){
-        CityLiveDataViewModel.this.name.postValue(city.getName());
-        CityLiveDataViewModel.this.temperature.postValue(city.getTempreature());
+    public LiveData<City> getCity() {
+        return city;
     }
 
-    private void updateTemperature(){
-        FakeWeather fakeWeather = new FakeWeather();
-        fakeWeather.getWeatherData(city.getName(), new FakeWeather.WeatherResultCallBack() {
-            @Override
-            public void onSuccess(double temp) {
-                city.setTempreature(temp);
-                updateData();
-            }
-            @Override
-            public void onFail() {
-
-            }
-        });
+    public void createCity(String cityName){
+        City newCity = new City(cityName);
+        cityRepository.createCity(newCity);
     }
 
-    public LiveData<String> getCityName(){
-        return name;
+    public void setCurrentCity(final String cityName){
+        City newCity = new City(cityName);
+        newCity.setCurrent(1);
+        cityRepository.updateCityStatus(newCity);
     }
 
-    public LiveData<Double> getTemperature(){
-        return temperature;
+    public void setNotCurrentCity(final String cityName){
+        City newCity = new City(cityName);
+        newCity.setCurrent(0);
+        cityRepository.updateCityStatus(newCity);
     }
 
-    public void updateCity(String cityName){
-        this.city.setName(cityName);
-        updateTemperature();
+    public void updateTemperature(String cityName){
+        cityRepository.updateTemperature(new City(cityName));
     }
+
 
 }
