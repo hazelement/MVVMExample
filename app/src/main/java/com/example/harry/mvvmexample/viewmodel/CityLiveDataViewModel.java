@@ -9,6 +9,8 @@ import android.util.Log;
 import com.example.harry.mvvmexample.model.City;
 import com.example.harry.mvvmexample.repo.CityRepository;
 
+import java.util.List;
+
 public class CityLiveDataViewModel extends AndroidViewModel {
 
     private CityRepository cityRepository;
@@ -28,6 +30,10 @@ public class CityLiveDataViewModel extends AndroidViewModel {
 
     public LiveData<City> getCity() {
         return city;
+    }
+
+    public LiveData<List<City>> getAllCities(){
+        return cityRepository.getAllCities();
     }
 
     public void createCity(String cityName){

@@ -28,6 +28,10 @@ public class CityRepository {
         return cityDao.getCity(cityName);
     }
 
+    public LiveData<List<City>> getAllCities(){
+        return cityDao.getAllCity();
+    }
+
     public LiveData<City> getCurrentCity(){
 //        new Thread(new Runnable() {
 //            @Override
